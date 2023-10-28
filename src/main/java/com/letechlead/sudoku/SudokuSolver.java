@@ -12,7 +12,7 @@ public class SudokuSolver {
     private final int gridSize;
     private final boolean isDiagonal;
 
-    public SudokuSolver(int[][] grid, boolean isDiagonal) throws Exception{
+    public SudokuSolver(int[][] grid, boolean isDiagonal) throws Exception {
 
         if (grid == null || grid.length < 4 || Arrays.stream(grid).anyMatch((col) ->
                 col == null || col.length < 4 || col.length != grid.length)) {
@@ -24,24 +24,23 @@ public class SudokuSolver {
         this.grid = grid;
     }
 
-    enum DIAGONAL{
+    enum DIAGONAL {
         LEFT,
         RIGHT,
         NONE;
     }
 
     private void verifySudokuNumberValidity(int number) throws Exception {
-        if(number < 1 || number > gridSize) throw new Exception("Not a valid Sudoku number.");
+        if (number < 1 || number > gridSize) throw new Exception("Not a valid Sudoku number.");
     }
 
     /**
-     *
      * @param index on x and/or y axis's
      * @throws Exception in case of invalid location.
      */
-    private void verifyLocationValidity(int... index) throws Exception{
-         if(index[0] < 1 || index[0] > gridSize || (index.length > 1 && (index[1] < 1 || index[1] > gridSize)))
-             throw new Exception("Invalid row and/or column number(s).");
+    private void verifyLocationValidity(int... index) throws Exception {
+        if (index[0] < 1 || index[0] > gridSize || (index.length > 1 && (index[1] < 1 || index[1] > gridSize)))
+            throw new Exception("Invalid row and/or column number(s).");
     }
 
     public boolean existInRow(int number, int rowNum) throws Exception {
@@ -62,25 +61,24 @@ public class SudokuSolver {
     }
 
     /**
-     *
-     * @param number number to be checked.
-     * @param diagonal left or right, optional if row and column numbers are provided.
-     * @param rowNum row number, optional if diagonal type is provided.
+     * @param number    number to be checked.
+     * @param diagonal  left or right, optional if row and column numbers are provided.
+     * @param rowNum    row number, optional if diagonal type is provided.
      * @param columnNum column number, optional if diagonal type is provided.
      * @return boolean, whether provided number exists in a diagonal or not.
      * @throws Exception in case of unrecognized diagonal.
      */
-    public boolean existInDiagonal(int number, DIAGONAL diagonal, Integer rowNum, Integer columnNum) throws Exception{
+    public boolean existInDiagonal(int number, DIAGONAL diagonal, Integer rowNum, Integer columnNum) throws Exception {
         verifySudokuNumberValidity(number);
-        if(Stream.of(diagonal, rowNum, columnNum).allMatch(Objects::isNull))
+        if (Stream.of(diagonal, rowNum, columnNum).allMatch(Objects::isNull))
             throw new Exception("Diagonal or location is mandatory.");
-        if(diagonal == null){
-            if(rowNum == null || columnNum == null) throw new Exception("Invalid row or column number.");
+        if (diagonal == null) {
+            if (rowNum == null || columnNum == null) throw new Exception("Invalid row or column number.");
             verifyLocationValidity(rowNum, columnNum);
             diagonal = whichDiagonal(rowNum, columnNum);
         }
-        if(diagonal == DIAGONAL.NONE) return false;
-        switch (diagonal){
+        if (diagonal == DIAGONAL.NONE) return false;
+        switch (diagonal) {
             case LEFT:
                 return Stream.iterate(0, index -> ++index).limit(gridSize).anyMatch(index -> grid[index][index] == number);
             case RIGHT:
@@ -92,20 +90,20 @@ public class SudokuSolver {
     }
 
     /**
-     *
-     * @param rowNum row number
+     * @param rowNum    row number
      * @param columnNum column number
      * @return Type of diagonal, left diagonal starts from upper left side, and right diagonal starts from upper right side.
      */
-    private DIAGONAL whichDiagonal(int rowNum, int columnNum){
-        if(rowNum == columnNum) return DIAGONAL.LEFT;
+    private DIAGONAL whichDiagonal(int rowNum, int columnNum) {
+        if (rowNum == columnNum) return DIAGONAL.LEFT;
         //TODO review below line
-        if(rowNum == (gridSize - columnNum + 1)) return DIAGONAL.RIGHT;
+        if (rowNum == (gridSize - columnNum + 1)) return DIAGONAL.RIGHT;
         return DIAGONAL.NONE;
     }
 
     public boolean existInBlock(int number, int blockWidth, int blockHeight, int blockNum) throws Exception {
         verifySudokuNumberValidity(number);
+        //TODO
         return false;
     }
 
@@ -115,11 +113,12 @@ public class SudokuSolver {
                 && (isDiagonal && !existInDiagonal(number, null, rowNum, columnNum));
     }
 
-    public void printGrid(){
-
+    public void printGrid() {
+        //TODO
     }
 
-    public String getPrintableGrid(){
+    public String getPrintableGrid() {
+        //TODO
         return null;
     }
 
